@@ -15,3 +15,20 @@ CREATE TABLE `news` (
   `update` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `product`;
+
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `pic` varchar(100) DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  `comment` bigint(20) DEFAULT NULL,
+  `url` varchar(150) DEFAULT NULL,
+  `category` varchar(100) DEFAULT NULL,
+  `create` datetime DEFAULT NULL,
+  `update` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

@@ -260,15 +260,15 @@ public class NewsServiceImpl implements NewsService {
                 String id = solrDocument.getFieldValue("id").toString();
                 // 处理高亮
                 Map<String, List<String>> highlightFieldMap = highlightingMaps.get(id);
-                if(!highlightFieldMap.isEmpty()){
+                if (!highlightFieldMap.isEmpty()) {
                     List<String> highlightTitle = highlightFieldMap.get("title");
                     List<String> highlightContent = highlightFieldMap.get("content");
-                    if(highlightTitle!=null&&!highlightTitle.isEmpty()){
+                    if (highlightTitle != null && !highlightTitle.isEmpty()) {
                         String title = highlightTitle.get(0);
                         // 将文档结果集中的title设置为高亮后的title
-                        solrDocument.setField("title",title);
+                        solrDocument.setField("title", title);
                     }
-                    if(highlightContent!=null&&!highlightContent.isEmpty()){
+                    if (highlightContent != null && !highlightContent.isEmpty()) {
                         String content = highlightContent.get(0);
                         // 将文档结果集中的content设置为高亮后的content
                         solrDocument.setField("content", content);
