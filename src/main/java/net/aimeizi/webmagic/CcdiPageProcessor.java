@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.monitor.SpiderMonitor;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.ArrayList;
@@ -156,12 +157,12 @@ public class CcdiPageProcessor implements PageProcessor {
         return site;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         JdbcPipeline jdbcPipeline = (JdbcPipeline) applicationContext.getBean("jdbcPipeline");
 
-        Spider.create(new CcdiPageProcessor())
+        Spider spider = Spider.create(new CcdiPageProcessor())
                 .addUrl("http://www.ccdi.gov.cn/yw/index.html")// 要闻
                 .addUrl("http://www.ccdi.gov.cn/ldhd/gcsy/index.html")// 领导活动-高层声音
                 .addUrl("http://www.ccdi.gov.cn/ldhd/wbld/index.html")// 领导活动-委部领导
@@ -182,8 +183,10 @@ public class CcdiPageProcessor implements PageProcessor {
                 .addUrl("http://www.ccdi.gov.cn/xcjy/lsjj/index.html")// 宣传教育-廉史镜鉴
                 .addUrl("http://www.ccdi.gov.cn/xcjy/hwgc/index.html")// 宣传教育-海外观察
                 .addPipeline(jdbcPipeline)
-                .thread(5)
-                .run();
+                .thread(5);
+        // 注册爬虫监控
+        SpiderMonitor.instance().register(spider);
+        spider.run();
     }
 
     /**

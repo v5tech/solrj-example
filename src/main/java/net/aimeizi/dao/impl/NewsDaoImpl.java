@@ -9,10 +9,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -56,8 +56,8 @@ public class NewsDaoImpl implements NewsDao {
                 ps.setString(3, news.getUrl());
                 ps.setString(4, news.getSource());
                 ps.setString(5, news.getPubdate());
-                ps.setDate(6, new Date(news.getCreate().getTime()));
-                ps.setDate(7, new Date(news.getUpdate().getTime()));
+                ps.setTimestamp(6, new Timestamp(news.getCreate().getTime()));
+                ps.setTimestamp(7, new Timestamp(news.getUpdate().getTime()));
             }
         });
     }

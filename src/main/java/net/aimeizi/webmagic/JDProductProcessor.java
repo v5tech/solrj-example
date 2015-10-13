@@ -7,6 +7,7 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.downloader.selenium.SeleniumDownloader;
+import us.codecraft.webmagic.monitor.SpiderMonitor;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.ArrayList;
@@ -81,13 +82,14 @@ public class JDProductProcessor implements PageProcessor {
 
         String chromeDriverPath = JDProductProcessor.class.getClassLoader().getResource("chromedriver.exe").getFile();
 
-        Spider.create(new JDProductProcessor())
+        Spider jdSpider = Spider.create(new JDProductProcessor())
                 .addUrl("http://www.jd.com/allSort.aspx")// JD全部分类
                 .addPipeline(jdPipeline)
                 .setDownloader(new SeleniumDownloader(chromeDriverPath))
-                .thread(5)
-                .run();
-
+                .thread(5);
+        // 注册爬虫监控
+        SpiderMonitor.instance().register(jdSpider);
+        jdSpider.run();
     }
 
     /**

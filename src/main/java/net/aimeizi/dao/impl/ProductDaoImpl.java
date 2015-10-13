@@ -14,10 +14,10 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.io.File;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -77,8 +77,8 @@ public class ProductDaoImpl implements ProductDao {
                 ps.setLong(4, product.getComment());
                 ps.setString(5, product.getUrl());
                 ps.setString(6, product.getCategory());
-                ps.setDate(7, new Date(product.getCreate().getTime()));
-                ps.setDate(8, new Date(product.getUpdate().getTime()));
+                ps.setTimestamp(7, new Timestamp(product.getCreate().getTime()));
+                ps.setTimestamp(8, new Timestamp(product.getUpdate().getTime()));
             }
         });
     }
