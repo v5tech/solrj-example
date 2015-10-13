@@ -34,8 +34,16 @@ public class JDPipeline implements Pipeline {
                 Product p = new Product();
                 p.setName(names.get(i));
                 p.setPic(pics.get(i));
-                p.setPrice(Double.parseDouble(prices.get(i)));
-                p.setComment(Long.parseLong(comments.get(i)));
+                try{
+                    double price = Double.parseDouble(prices.get(i));
+                    p.setPrice(price);
+                }catch (Exception e){
+                }
+                try{
+                    long comment = Long.parseLong(comments.get(i));
+                    p.setComment(comment);
+                }catch (Exception e){
+                }
                 p.setUrl(links.get(i));
                 p.setCategory(category);
                 p.setCreate(new Date());
