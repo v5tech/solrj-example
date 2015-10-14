@@ -56,7 +56,7 @@
             <section>
                 <div class="row-fluid">
                     <div>
-                        <form id="searchform" name="searchform" action="/search" class="form-inline" method="post">
+                        <form id="searchform" name="searchform" action="/news/search" class="form-inline" method="post">
                             <div class="form-group">
                                 <input type="text" class="form-control" name="queryString" value="${queryString}" style="width: 396px;">
                             </div>

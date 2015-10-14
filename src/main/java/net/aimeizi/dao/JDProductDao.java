@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/10/8.
  */
-public interface ProductDao {
+public interface JDProductDao {
     void save(Product product);
 
     List<Product> findAll();

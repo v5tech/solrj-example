@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2015/10/8.
  */
-public interface NewsService {
+public interface CcdiNewsService {
     void indexdb();
 
     void addNews(News news) throws Exception;

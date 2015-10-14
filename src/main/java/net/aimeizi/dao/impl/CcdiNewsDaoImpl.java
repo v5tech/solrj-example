@@ -1,6 +1,6 @@
 package net.aimeizi.dao.impl;
 
-import net.aimeizi.dao.NewsDao;
+import net.aimeizi.dao.CcdiNewsDao;
 import net.aimeizi.domain.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Administrator on 2015/10/8.
  */
 @Repository
-public class NewsDaoImpl implements NewsDao {
+public class CcdiNewsDaoImpl implements CcdiNewsDao {
 
     private JdbcTemplate jdbcTemplate;
 

@@ -1,6 +1,6 @@
 package net.aimeizi.dao.impl;
 
-import net.aimeizi.dao.ProductDao;
+import net.aimeizi.dao.JDProductDao;
 import net.aimeizi.domain.Product;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -24,7 +24,7 @@ import java.util.List;
  * Created by Administrator on 2015/10/8.
  */
 @Repository
-public class ProductDaoImpl implements ProductDao {
+public class JDProductDaoImpl implements JDProductDao {
 
     private JdbcTemplate jdbcTemplate;
 

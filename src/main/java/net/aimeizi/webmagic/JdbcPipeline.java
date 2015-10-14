@@ -1,6 +1,6 @@
 package net.aimeizi.webmagic;
 
-import net.aimeizi.dao.NewsDao;
+import net.aimeizi.dao.CcdiNewsDao;
 import net.aimeizi.domain.News;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Component("jdbcPipeline")
 public class JdbcPipeline implements Pipeline {
     @Autowired
-    NewsDao newsDao;
+    CcdiNewsDao newsDao;
 
     public void process(ResultItems resultItems, Task task) {
         Map<String, Object> items = resultItems.getAll();

@@ -1,7 +1,7 @@
 package net.aimeizi.service.impl;
 
 import net.aimeizi.domain.News;
-import net.aimeizi.service.NewsService;
+import net.aimeizi.service.CcdiNewsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class NewsServiceImplTest extends AbstractJUnit4SpringContextTests {
 
     @Autowired
-    NewsService newsService;
+    CcdiNewsService newsService;
 
     /**
      * 测试创建索引

@@ -1,6 +1,6 @@
 package net.aimeizi.webmagic;
 
-import net.aimeizi.dao.ProductDao;
+import net.aimeizi.dao.JDProductDao;
 import net.aimeizi.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class JDPipeline implements Pipeline {
 
     @Autowired
-    ProductDao productDao;
+    JDProductDao productDao;
 
     public void process(ResultItems resultItems, Task task) {
         Map<String, Object> items = resultItems.getAll();

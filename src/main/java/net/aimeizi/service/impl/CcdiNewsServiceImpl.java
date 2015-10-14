@@ -1,8 +1,8 @@
 package net.aimeizi.service.impl;
 
-import net.aimeizi.dao.NewsDao;
+import net.aimeizi.dao.CcdiNewsDao;
 import net.aimeizi.domain.News;
-import net.aimeizi.service.NewsService;
+import net.aimeizi.service.CcdiNewsService;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.beans.DocumentObjectBinder;
@@ -22,10 +22,10 @@ import java.util.*;
  * http://wiki.apache.org/solr/Solrj
  */
 @Service
-public class NewsServiceImpl implements NewsService {
+public class CcdiNewsServiceImpl implements CcdiNewsService {
 
     @Autowired
-    private NewsDao newsDao;
+    private CcdiNewsDao newsDao;
 
     @Autowired
     SolrServer solrServer;
