@@ -33,7 +33,8 @@
     <div id="search-2014">
         <div class="form">
             <form action="/search" method="post" name="searchform" id="searchform">
-                <input type="hidden" name="pageNumber" value="${pageNumber}" id="pageNumber">
+                <input type="hidden" name="pageNumber" value="${pageNumber}" id="pageNumber"/>
+                <input type="hidden" name="pageSize" value="${pageSize}" id="pageSize"/>
                 <input type="hidden" name="sort" value="${sort}" id="sort"/>
                 <input type="text" name="queryString" value="${queryString}"
                        onkeydown="javascript:if(event.keyCode==13) search('comment');" id="key" class="text"/>
@@ -52,7 +53,7 @@
     <div class="container" id="J_container">
         <div id="J_main" class="g-main2">
             <c:if test="${not empty results}">
-                <div class="m-list" style="width: 1410px;">
+                <div class="m-list" style="width: 1250px;">
                     <div class="ml-wrap">
                         <div class="filter" id="J_filter">
                             <div class="f-line top">
@@ -76,20 +77,18 @@
                         </div>
                         <div class="clr"></div>
                         <div id="plist" class="goods-list-v1 gl-type-4 J-goods-list">
-                            <ul class="gl-warp clearfix" style="width: 1410px;">
+                            <ul class="gl-warp clearfix" style="width: 1250px;">
                                 <c:forEach items="${results}" var="product">
                                     <li class="gl-item">
-                                        <div class="gl-i-wrap j-sku-item" data-i="1" data-sku="11078102" selfservice=""
-                                             jdzy_shop_id="" is_parallel_stock="0">
+                                        <div class="gl-i-wrap j-sku-item">
                                             <div class="p-img">
                                                 <a target="_blank" href="${product.url}">
-                                                    <img class="err-product" data-img="1" data-lazy-img="done"
-                                                         src="${product.pic}"/>
+                                                    <img class="err-product" src="${product.pic}"/>
                                                 </a>
                                             </div>
                                             <div class="p-price">
                                                 <strong class="J_price"
-                                                        data-istsyx="n"><em>&yen;</em><i>${product.price}</i></strong>
+                                                        data-istsyx="n"><em>&yen;</em><i><fmt:formatNumber value="${product.price}" type="currency"/></i></strong>
 
                                                 <div class="p-icons">
                                                     <i class="goods-icons-s1" title="该商品支持货到付款">货到付款</i>
@@ -146,14 +145,14 @@
     <c:if test="${not empty results}">
     $(document).ready(function () {
         $("#pageNav").pager(
-                {
-                    pagenumber:${pageNumber},
-                    pagecount:${totalPages},
-                    buttonClickCallback: function (pageCurrent) {
-                        document.getElementById('pageNumber').value = pageCurrent;
-                        document.getElementById('searchform').submit();
-                    }
-                });
+            {
+                pagenumber:${pageNumber},
+                pagecount:${totalPages},
+                buttonClickCallback: function (pageCurrent) {
+                    document.getElementById('pageNumber').value = pageCurrent;
+                    document.getElementById('searchform').submit();
+                }
+            });
     });
     </c:if>
 </script>
