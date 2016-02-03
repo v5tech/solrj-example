@@ -58,14 +58,14 @@ public class JDProductDaoImpl implements JDProductDao {
         String sql = "INSERT INTO product (`name`,pic,price,comment,url,category,`create`,`update`) VALUES (?,?,?,?,?,?,?,?)";
         jdbcTemplate.update(sql, new PreparedStatementSetter() {
             public void setValues(PreparedStatement ps) throws SQLException {
-                // »ñÈ¡src/main/webapp/images ¾ø¶ÔÂ·¾¶
+                // è·å–src/main/webapp/images ç»å¯¹è·¯å¾„
                 String filepath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "images";
                 String pic = product.getPic();
                 if (StringUtils.isNotEmpty(pic)) {
                     String filename = FilenameUtils.getName(pic);
                     try {
                         File file = new File(filepath, filename);
-                        FileUtils.copyURLToFile(new URL("http:" + pic), file); //½«ÎÄ¼şĞ´Èëµ½´ÅÅÌÖĞ
+                        FileUtils.copyURLToFile(new URL("http:" + pic), file); //å°†æ–‡ä»¶å†™å…¥åˆ°ç£ç›˜ä¸­
                         pic = "images/" + filename;
                     } catch (Exception e) {
 

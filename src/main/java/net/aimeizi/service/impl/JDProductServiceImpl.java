@@ -33,50 +33,50 @@ public class JDProductServiceImpl implements JDProductService {
         Map<String, Object> maps = new HashMap<String, Object>();
         List<Product> productList = new ArrayList<>();
         SolrQuery solrQuery = new SolrQuery();
-        solrQuery.setQuery("name:" + queryString); // *name:queryString*°´Ãû³Æ²éÑ¯
+        solrQuery.setQuery("name:" + queryString); // *name:queryString*æŒ‰åç§°æŸ¥è¯¢
         start = (start - 1) * pageSize;
-        solrQuery.setStart(start); //ÉèÖÃÆğÊ¼Î»ÖÃ
-        solrQuery.setRows(pageSize); // ÉèÖÃÒ³´óĞ¡
-        solrQuery.setHighlight(true); //ÆôÓÃ¸ßÁÁ
-        solrQuery.addHighlightField("name"); //ÉèÖÃ¸ßÁÁ×Ö¶Î
-        solrQuery.addHighlightField("category"); //ÉèÖÃ¸ßÁÁ×Ö¶Î
-        solrQuery.setHighlightFragsize(200); // ÉèÖÃ¸ßÁÁÄÚÈİ´óĞ¡
-        solrQuery.setHighlightSimplePre("<em>"); //ÉèÖÃ¸ßÁÁÇ°×º
-        solrQuery.setHighlightSimplePost("</em>"); //ÉèÖÃ¸ßÁÁºó×º
+        solrQuery.setStart(start); //è®¾ç½®èµ·å§‹ä½ç½®
+        solrQuery.setRows(pageSize); // è®¾ç½®é¡µå¤§å°
+        solrQuery.setHighlight(true); //å¯ç”¨é«˜äº®
+        solrQuery.addHighlightField("name"); //è®¾ç½®é«˜äº®å­—æ®µ
+        solrQuery.addHighlightField("category"); //è®¾ç½®é«˜äº®å­—æ®µ
+        solrQuery.setHighlightFragsize(200); // è®¾ç½®é«˜äº®å†…å®¹å¤§å°
+        solrQuery.setHighlightSimplePre("<em>"); //è®¾ç½®é«˜äº®å‰ç¼€
+        solrQuery.setHighlightSimplePost("</em>"); //è®¾ç½®é«˜äº®åç¼€
         sort = StringUtils.isNotEmpty(sort) ? sort : "score";
-        solrQuery.addSort(sort, SolrQuery.ORDER.desc); //ÉèÖÃÅÅĞò °´score½µĞòÅÅĞò
+        solrQuery.addSort(sort, SolrQuery.ORDER.desc); //è®¾ç½®æ’åº æŒ‰scoreé™åºæ’åº
         QueryResponse queryResponse = solrServer.query(solrQuery);
-        int qtime = queryResponse.getQTime();//²éÑ¯»¨·ÑÊ±¼ä
-        SolrDocumentList solrDocumentList = queryResponse.getResults();// »ñÈ¡²éÑ¯½á¹û¼¯
-        // »ñÈ¡¸ßÁÁÄÚÈİ µÚÒ»¸öMapµÄ¼üÊÇÎÄµµµÄID£¬µÚ¶ş¸öMapµÄ¼üÊÇ¸ßÁÁÏÔÊ¾µÄ×Ö¶ÎÃû
+        int qtime = queryResponse.getQTime();//æŸ¥è¯¢èŠ±è´¹æ—¶é—´
+        SolrDocumentList solrDocumentList = queryResponse.getResults();// è·å–æŸ¥è¯¢ç»“æœé›†
+        // è·å–é«˜äº®å†…å®¹ ç¬¬ä¸€ä¸ªMapçš„é”®æ˜¯æ–‡æ¡£çš„IDï¼Œç¬¬äºŒä¸ªMapçš„é”®æ˜¯é«˜äº®æ˜¾ç¤ºçš„å­—æ®µå
         Map<String, Map<String, List<String>>> highlightingMaps = queryResponse.getHighlighting();
-        long totals = solrDocumentList.getNumFound();// ²éÑ¯µ½µÄ×Ü¼ÇÂ¼Êı
+        long totals = solrDocumentList.getNumFound();// æŸ¥è¯¢åˆ°çš„æ€»è®°å½•æ•°
         if (!solrDocumentList.isEmpty()) {
             Iterator<SolrDocument> it = solrDocumentList.iterator();
             while (it.hasNext()) {
                 SolrDocument solrDocument = it.next();
-                // »ñÈ¡ÎÄµµid
+                // è·å–æ–‡æ¡£id
                 String id = solrDocument.getFieldValue("id").toString();
-                // ´¦Àí¸ßÁÁ
+                // å¤„ç†é«˜äº®
                 Map<String, List<String>> highlightFieldMap = highlightingMaps.get(id);
                 if (!highlightFieldMap.isEmpty()) {
                     List<String> highlightName = highlightFieldMap.get("name");
                     List<String> highlightCategory = highlightFieldMap.get("category");
                     if (highlightName != null && !highlightName.isEmpty()) {
                         String name = highlightName.get(0);
-                        // ½«ÎÄµµ½á¹û¼¯ÖĞµÄnameÉèÖÃÎª¸ßÁÁºóµÄname
+                        // å°†æ–‡æ¡£ç»“æœé›†ä¸­çš„nameè®¾ç½®ä¸ºé«˜äº®åçš„name
                         solrDocument.setField("name", name);
                     }
                     if (highlightCategory != null && !highlightCategory.isEmpty()) {
                         String category = highlightCategory.get(0);
-                        // ½«ÎÄµµ½á¹û¼¯ÖĞµÄcategoryÉèÖÃÎª¸ßÁÁºóµÄcategory
+                        // å°†æ–‡æ¡£ç»“æœé›†ä¸­çš„categoryè®¾ç½®ä¸ºé«˜äº®åçš„category
                         solrDocument.setField("category", category);
                     }
                 }
-                // µ÷ÓÃsolrDocument×ªjava bean
+                // è°ƒç”¨solrDocumentè½¬java bean
                 Product product = doc2bean(solrDocument);
                 String picture = product.getPic();
-                // ´¦ÀíÍ¼Æ¬µØÖ·Îª¿Õ»òÍ¼Æ¬µØÖ·ÎŞĞ§
+                // å¤„ç†å›¾ç‰‡åœ°å€ä¸ºç©ºæˆ–å›¾ç‰‡åœ°å€æ— æ•ˆ
                 if (StringUtils.isEmpty(picture) || "done".equals(picture)) {
                     product.setPic("images/nopicture.png");
                 }
@@ -90,7 +90,7 @@ public class JDProductServiceImpl implements JDProductService {
     }
 
     /**
-     * solrDocumentÓëjava bean×ª»»
+     * solrDocumentä¸java beanè½¬æ¢
      *
      * @param solrDocument
      * @return
@@ -102,7 +102,7 @@ public class JDProductServiceImpl implements JDProductService {
     }
 
     /**
-     * solrDocumentÓëjava bean ¼¯ºÏ×ª»»
+     * solrDocumentä¸java bean é›†åˆè½¬æ¢
      *
      * @param solrDocumentList
      * @return
@@ -114,7 +114,7 @@ public class JDProductServiceImpl implements JDProductService {
     }
 
     /**
-     * beanÓëSolrInputDocument×ª»»
+     * beanä¸SolrInputDocumentè½¬æ¢
      *
      * @param product
      * @return

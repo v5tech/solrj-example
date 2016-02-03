@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2015/10/12.
- * JDÉÌÆ·×¥È¡
+ * JDå•†å“æŠ“å–
  */
 public class JDProductProcessor implements PageProcessor {
 
@@ -24,25 +24,29 @@ public class JDProductProcessor implements PageProcessor {
             .setSleepTime(1000)
             .setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31");
 
-    private static final String URL_LIST = "http://list\\.jd\\.com/.*\\.html";
+    // æœªæ”¹ç‰ˆä¹‹å‰
+//    private static final String URL_LIST = "http://list\\.jd\\.com/.*\\.html";
+
+    // æ”¹ç‰ˆä¹‹å
+    private static final String URL_LIST = "http://list\\.jd\\.com/list\\.html\\?cat=.*";
 
     @Override
     public void process(Page page) {
-        // ËùÓĞÉÌÆ··ÖÀàÈë¿Ú
+        // æ‰€æœ‰å•†å“åˆ†ç±»å…¥å£
         if (page.getUrl().regex("http://www\\.jd\\.com/allSort\\.aspx").match()) {
-            List<String> links = page.getHtml().links().regex(URL_LIST).all();// »ñÈ¡ÉÌÆ··ÖÀàÁ´½ÓÆ¥ÅäURL_LISTµÄÁ´½ÓĞÅÏ¢
-            // Ìí¼ÓÉÌÆ··ÖÀàÒ³ÃæËùÆ¥Åäµ½µÄËùÓĞÉÌÆ·ĞÅÏ¢µ½ÇëÇóÖĞ
+            List<String> links = page.getHtml().links().regex(URL_LIST).all();// è·å–å•†å“åˆ†ç±»é“¾æ¥åŒ¹é…URL_LISTçš„é“¾æ¥ä¿¡æ¯
+            // æ·»åŠ å•†å“åˆ†ç±»é¡µé¢æ‰€åŒ¹é…åˆ°çš„æ‰€æœ‰å•†å“ä¿¡æ¯åˆ°è¯·æ±‚ä¸­
             page.addTargetRequests(links);
-        } else { //´¦ÀíÉÌÆ·ÁĞ±íÒ³
+        } else { //å¤„ç†å•†å“åˆ—è¡¨é¡µ
             List<String> names = page.getHtml().xpath("//li[@class='gl-item']/div[@class='gl-i-wrap j-sku-item']/div[@class='p-name']/a/em/text()").all();
             List<String> prices = page.getHtml().xpath("//li[@class='gl-item']/div[@class='gl-i-wrap j-sku-item']/div[@class='p-price']/strong[@class='J_price']/i/text()").all();
             List<String> comments = page.getHtml().xpath("//li[@class='gl-item']/div[@class='gl-i-wrap j-sku-item']/div[@class='p-commit']/strong/a/text()").all();
             List<String> links = page.getHtml().xpath("//li[@class='gl-item']/div[@class='gl-i-wrap j-sku-item']/div[@class='p-img']/a/@href").all();
-            List<String> top3Pic = page.getHtml().xpath("//li[@class='gl-item']/div[@class='gl-i-wrap j-sku-item']/div[@class='p-img']/a/img/@src").all(); //»ñÈ¡Ò³Ãæ³õÊ¼»¯µÄÇ°ÈıÕÅÍ¼Æ¬µØÖ·
-            List<String> lazyPic = page.getHtml().xpath("//li[@class='gl-item']/div[@class='gl-i-wrap j-sku-item']/div[@class='p-img']/a/img/@data-lazy-img").all(); // »ñÈ¡ÀÁ¼ÓÔØµÄÍ¼Æ¬µØÖ·
+            List<String> top3Pic = page.getHtml().xpath("//li[@class='gl-item']/div[@class='gl-i-wrap j-sku-item']/div[@class='p-img']/a/img/@src").all(); //è·å–é¡µé¢åˆå§‹åŒ–çš„å‰ä¸‰å¼ å›¾ç‰‡åœ°å€
+            List<String> lazyPic = page.getHtml().xpath("//li[@class='gl-item']/div[@class='gl-i-wrap j-sku-item']/div[@class='p-img']/a/img/@data-lazy-img").all(); // è·å–æ‡’åŠ è½½çš„å›¾ç‰‡åœ°å€
             List<String> pics = new ArrayList<>();
-            pics.addAll(top3Pic.subList(0, 3)); //»ñÈ¡Ç°ÈıÕÅÍ¼Æ¬
-            pics.addAll(lazyPic.subList(3, lazyPic.size())); //»ñÈ¡³ıÇ°ÈıÕÅÖ®ÍâµÄÍ¼Æ¬
+            pics.addAll(top3Pic.subList(0, 3)); //è·å–å‰ä¸‰å¼ å›¾ç‰‡
+            pics.addAll(lazyPic.subList(3, lazyPic.size())); //è·å–é™¤å‰ä¸‰å¼ ä¹‹å¤–çš„å›¾ç‰‡
             String category = page.getHtml().xpath("//div[@id='J_selector']/div[@class='s-title']/h3/b/text()").get();
             if ("".equals(category)) {
                 category = page.getHtml().xpath("//div[@id='J_selector']/div[@class='s-title']/h3/em/text()").get();
@@ -54,15 +58,15 @@ public class JDProductProcessor implements PageProcessor {
             page.putField("pics", pics);
             page.putField("category", category);
 
-            // »ñÈ¡µ±Ç°Ò³url
+            // è·å–å½“å‰é¡µurl
             String url = page.getUrl().get();
-            if (url.endsWith(".html")) {// ÈôÇëÇóurlÊÇÒÔ.html½áÎ²Ôò±íÊ¾ÊÇ´ÓÉÌÆ··ÖÀàÒ³ÃæÖĞ³éÈ¡µ½µÄÉÌÆ·url£¬¼´Îª¸ÃÉÌÆ··ÖÀàÏÂµÄÊ×Ò³,ÒÔÏÂ´úÂë»ñÈ¡¸ÃÉÌÆ··ÖÀàÏÂµÄ×ÜÒ³Êı£¬¹¹½¨ÉÌÆ··ÖÒ³¡£²¢½«·ÖÒ³ĞÅÏ¢Ìí¼Óµ½ÅÀ³æÁĞ±í
-                // »ñÈ¡×ÜÒ³Êı
+            if (url.endsWith(".html")) {// è‹¥è¯·æ±‚urlæ˜¯ä»¥.htmlç»“å°¾åˆ™è¡¨ç¤ºæ˜¯ä»å•†å“åˆ†ç±»é¡µé¢ä¸­æŠ½å–åˆ°çš„å•†å“urlï¼Œå³ä¸ºè¯¥å•†å“åˆ†ç±»ä¸‹çš„é¦–é¡µ,ä»¥ä¸‹ä»£ç è·å–è¯¥å•†å“åˆ†ç±»ä¸‹çš„æ€»é¡µæ•°ï¼Œæ„å»ºå•†å“åˆ†é¡µã€‚å¹¶å°†åˆ†é¡µä¿¡æ¯æ·»åŠ åˆ°çˆ¬è™«åˆ—è¡¨
+                // è·å–æ€»é¡µæ•°
                 String pages = page.getHtml().xpath("//div[@id='J_filter']/div[@class='f-line top']/div[@id='J_topPage']/span[@class='fp-text']/i/text()").get();
                 if (StringUtils.isNotEmpty(pages)) {
                     int pageCount = Integer.parseInt(pages);
-                    // ½«·ÖÒ³ĞÅÏ¢Ìí¼Óµ½ÅÀ³æÁĞ±í
-                    for (int i = 2; i <= pageCount; i++) { //ÕâÀïĞèÒªÅÅ³ıµÚÒ»Ò³,Ä¬ÈÏµÚÒ»´Î´ò¿ªµÄÒ³Ãæ¼´ÎªµÚÒ»Ò³£¬Òò´Ë´ÓµÚ2Ò³¿ªÊ¼£¬ÏÂ±êÎª2
+                    // å°†åˆ†é¡µä¿¡æ¯æ·»åŠ åˆ°çˆ¬è™«åˆ—è¡¨
+                    for (int i = 2; i <= pageCount; i++) { //è¿™é‡Œéœ€è¦æ’é™¤ç¬¬ä¸€é¡µ,é»˜è®¤ç¬¬ä¸€æ¬¡æ‰“å¼€çš„é¡µé¢å³ä¸ºç¬¬ä¸€é¡µï¼Œå› æ­¤ä»ç¬¬2é¡µå¼€å§‹ï¼Œä¸‹æ ‡ä¸º2
                         String link = buildUrl(url, i);
                         page.addTargetRequest(link);
                     }
@@ -83,17 +87,17 @@ public class JDProductProcessor implements PageProcessor {
         String chromeDriverPath = JDProductProcessor.class.getClassLoader().getResource("chromedriver.exe").getFile();
 
         Spider jdSpider = Spider.create(new JDProductProcessor())
-                .addUrl("http://www.jd.com/allSort.aspx")// JDÈ«²¿·ÖÀà
+                .addUrl("http://www.jd.com/allSort.aspx")// JDå…¨éƒ¨åˆ†ç±»
                 .addPipeline(jdPipeline)
                 .setDownloader(new SeleniumDownloader(chromeDriverPath))
                 .thread(5);
-        // ×¢²áÅÀ³æ¼à¿Ø
+        // æ³¨å†Œçˆ¬è™«ç›‘æ§
         SpiderMonitor.instance().register(jdSpider);
         jdSpider.run();
     }
 
     /**
-     * ¹¹½¨ÉÌÆ··ÖÒ³url
+     * æ„å»ºå•†å“åˆ†é¡µurl
      *
      * @param str
      * @return

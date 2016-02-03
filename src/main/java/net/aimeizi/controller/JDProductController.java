@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ¾©¶«ÉÌÆ·ËÑË÷
+ * äº¬ä¸œå•†å“æœç´¢
  * Created by Administrator on 2015/10/14.
  */
 @Controller
@@ -34,7 +34,7 @@ public class JDProductController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("jd");
         String queryString = request.getParameter("queryString");
-        // ÈôÊ²Ã´¶¼²»ÊäÈë£¬Ôò±íÊ¾ËÑË÷È«²¿ÉÌÆ·
+        // è‹¥ä»€ä¹ˆéƒ½ä¸è¾“å…¥ï¼Œåˆ™è¡¨ç¤ºæœç´¢å…¨éƒ¨å•†å“
         queryString = StringUtils.isEmpty(queryString) ? "*" : queryString;
         String sort = request.getParameter("sort");
         String pageNumber = request.getParameter("pageNumber");
